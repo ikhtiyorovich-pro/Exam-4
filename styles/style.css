@@ -1,0 +1,26 @@
+.line-wrapper{
+    width: 100%;
+    max-width: 493px;
+}
+
+.line-wrapper + .line-wrapper{
+    margin-left: 20px;
+}
+
+.lists-wrapper{
+    list-style: none;
+    padding: 20px 30px;
+}
+
+button{
+    width: 100%;
+    max-width: 100px;
+    border: 2px solid black;
+    transform: translateX(330px);
+}
+
+li{
+    padding: 20px 0;
+    border-bottom: 2px solid black;
+}
+
