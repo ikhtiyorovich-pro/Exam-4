@@ -1,205 +1,124 @@
-let elUserList = document.querySelector(".user-list");
-let elPostList = document.querySelector(".list-post");
-let elComentList = document.querySelector(".list-coment");
-let userTemplate = document.querySelector("#js-user-template").content;
+let elUsersList = document.querySelector(".list-users");
+let elPostsList = document.querySelector(".list-posts");
+let elCommentsList = document.querySelector(".list-comments");
 
 
 // ===============================================================
-let postTemplate = document.querySelector("#js-post-template").content;
-// let elPostBtn = document.querySelector(".post-btn");
+let usersTemplate = document.querySelector("#js-user-template").content;
+let postsTemplate = document.querySelector("#js-post-template").content;
+let commentsTemplate = document.querySelector("#js-comment-template").content;
+
 
 // Users======================================================================
-let commentTemplate = document.querySelector("#js-comment-template").content;
-
-
 
 
 let elFragment = document.createDocumentFragment();
 
+fetch("https://jsonplaceholder.typicode.com/users")
+  .then(response => response.json())
+  .then(data => appendUsersList(data));
 
-fetch('https://jsonplaceholder.typicode.com/users')
-    .then(response => response.json())
-    .then(data => appendUser(data))
+let renderUsersList = function (object) {
+  let usersNameTemplate = usersTemplate.cloneNode(true);
 
-let renderUser = function (objectUser) {
-    let userNameTemplate = userTemplate.cloneNode(true);
+  usersNameTemplate.querySelector(".js-name").textContent = object.name;
+  usersNameTemplate.querySelector(".js-user").textContent = object.username;
+  usersNameTemplate.querySelector(".js-email").textContent = object.email;
+  usersNameTemplate.querySelector(".js-street").textContent = object.address.street;
+  usersNameTemplate.querySelector(".js-suite").textContent = object.address.suite;
+  usersNameTemplate.querySelector(".js-city").textContent = object.address.city;
+  usersNameTemplate.querySelector(".name-btn").value = object.id;
 
-    userNameTemplate.querySelector(".js-name").textContent = objectUser.name;
-    userNameTemplate.querySelector(".js-user").textContent = objectUser.username;
-    userNameTemplate.querySelector(".name-btn").setAttribute("data-id", `${objectUser.id}`)
-
-    elFragment.appendChild(userNameTemplate);
-
+  elFragment.appendChild(usersNameTemplate);
 };
 
-elUserList.innerHTML = "";
+elUsersList.innerHTML = "";
 
-let appendUser = function (array) {
-    array.forEach(function (objectUser) {
+let appendUsersList = function (array) {
+  array.forEach(function (object) {
+    renderUsersList(object);
+  });
 
-        renderUser(objectUser);
-    });
-
-    elUserList.appendChild(elFragment);
-
+  elUsersList.appendChild(elFragment);
 };
-
 
 // Posts======================================================================
 
+const testUsersList = function (id) {
+  let elPostsFragment = document.createDocumentFragment();
 
-const test = function (id) {
-    let elPostFragment = document.createDocumentFragment();
+  let renderPostsList = function (objectPost) {
+    let elPostsTemplate = postsTemplate.cloneNode(true);
 
-    let renderPost = function (objectPost) {
-        let elpostTemplate = postTemplate.cloneNode(true);
+    elPostsTemplate.querySelector(".js-post-title").textContent =
+      objectPost.title;
+    elPostsTemplate.querySelector(".js-post-body").textContent = objectPost.body;
+    elPostsTemplate
+      .querySelector(".post-btn")
+      .value = objectPost.id;
 
-        elpostTemplate.querySelector(".js-post-title").textContent = objectPost.title;
-        elpostTemplate.querySelector(".js-post-body").textContent = objectPost.body;
-        elpostTemplate.querySelector(".post-btn").setAttribute("data-id", `${objectPost.id}`)
+    elPostsFragment.appendChild(elPostsTemplate);
+  };
+  // elUsersList.innerHTML = "";
 
-        elPostFragment.appendChild(elpostTemplate);
-    };
+  let appendPostsList = function (postArray) {
+    let postChanges = postArray.filter(elementUser => elementUser.userId == id);
+    postChanges.forEach(function (objectPost) {
+      renderPostsList(objectPost);
+    });
+    elPostsList.appendChild(elPostsFragment);
+  };
 
-    let appenPost = function (postarray) {
-        let nimadir = postarray.filter((el) => el.userId == id);
-        nimadir.forEach(function (objectPost) {
-            renderPost(objectPost);
-        });
-        elPostList.appendChild(elPostFragment);
-    };
+  fetch("https://jsonplaceholder.typicode.com/posts")
+    .then(response => response.json())
+    .then(data => appendPostsList(data));
+};
 
-    fetch('https://jsonplaceholder.typicode.com/posts')
-        .then(response => response.json())
-        .then(data => appenPost(data))
-
-}
-
-
-elUserList.addEventListener("click", function (e) {
-    elPostList.innerHTML = "";
-    let userId = e.target.dataset.id
-    test(userId)
+elUsersList.addEventListener("click", function (evtUser) {
+  if (evtUser.target.className == "name-btn") {
+    elPostsList.innerHTML = "";
+    elCommentsList.innerHTML = "";
+    let userId = evtUser.target.value;
+    testUsersList(userId);
+  }
 });
 
+// 3===============================================================================
 
+const commentsFunction = function (postId) {
+  let elCommentsFragment = document.createDocumentFragment();
 
-// Comments===============================================================================
+  let renderCommentsList = function (objectComment) {
+    let elCommentsTemplate = commentsTemplate.cloneNode(true);
 
-const commentsTest = function (idi) {
+    elCommentsTemplate.querySelector(".comment-name").textContent =
+      objectComment.name;
+    elCommentsTemplate.querySelector(".comment-email").textContent =
+      objectComment.email;
+    elCommentsTemplate.querySelector(".comment-body").textContent =
+      objectComment.body;
 
-    let elCommentFragment = document.createDocumentFragment();
+    elCommentsFragment.appendChild(elCommentsTemplate);
+  };
 
-    let renderComment = function (objectComment) {
-        let elCommentTemplate = commentTemplate.cloneNode(true);
+  let appendCommentsFunction = function (commentsArray) {
+    let postFunction = commentsArray.filter(elementComment => elementComment.postId == postId);
+    postFunction.forEach(function (objectComment) {
+      renderCommentsList(objectComment);
+    });
+    elCommentsList.appendChild(elCommentsFragment);
+  };
 
-        elCommentTemplate.querySelector(".comment-name").textContent = objectComment.name;
-        elCommentTemplate.querySelector(".comment-email").textContent = objectComment.email;
-        elCommentTemplate.querySelector(".comment-body").textContent = objectComment.body;
+  fetch("https://jsonplaceholder.typicode.com/comments")
+    .then(response => response.json())
+    .then(data => appendCommentsFunction(data));
+};
 
-        elCommentFragment.appendChild(elCommentTemplate);
-    };
-
-    let appendComment = function (commentarr) {
-        let some = commentarr.filter((elem) => elem.postId == idi);
-        some.forEach(function (objectComment) {
-            renderComment(objectComment);
-        });
-        elComentList.appendChild(elCommentFragment);
+elPostsList.addEventListener("click", function (evtPost) {
+    if(evtPost.target.className == "post-btn"){
+        elCommentsList.innerHTML = "";
+        let postId = evtPost.target.value;
+        commentsFunction(postId);
     }
-
-
-    fetch('https://jsonplaceholder.typicode.com/comments')
-        .then(response => response.json())
-        .then(data => appendComment(data))
-}
-
-
-elPostList.addEventListener("click", function (ev) {
-    elComentList.innerHTML = "";
-    let postId = ev.target.dataset.id
-    commentsTest(postId);
+ 
 });
-console.log();
-
-
-// =============================================================================================================================
-
-// Change colors 
-
-function usersColors() {
-  disco = setInterval(() => {
-    elUserList.style.backgroundColor = "lightgreen";
-
-    setTimeout(() => {
-        elUserList.style.backgroundColor = "yellow";
-    }, 1500);
-
-    setTimeout(() => {
-        elUserList.style.backgroundColor = "orange";
-    }, 3000);
-
-    setTimeout(() => {
-        elUserList.style.backgroundColor = "lightblue";
-    }, 4500);
-
-    setTimeout(() => {
-        elUserList.style.backgroundColor = "pink";
-    }, 6000);
-
-  }, 1000);
-}
-
-usersColors();
-
-
-function postsColors() {
-  disco = setInterval(() => {
-    elPostList.style.backgroundColor = "lightgreen";
-
-    setTimeout(() => {
-        elPostList.style.backgroundColor = "yellow";
-    }, 1500);
-
-    setTimeout(() => {
-        elPostList.style.backgroundColor = "orange";
-    }, 3000);
-
-    setTimeout(() => {
-        elPostList.style.backgroundColor = "lightblue";
-    }, 4500);
-
-    setTimeout(() => {
-        elPostList.style.backgroundColor = "pink";
-    }, 6000);
-
-  }, 1000);
-}
-
-postsColors();
-
-
-function commentsColors() {
-  disco = setInterval(() => {
-    elComentList.style.backgroundColor = "lightgreen";
-
-    setTimeout(() => {
-        elComentList.style.backgroundColor = "yellow";
-    }, 1500);
-
-    setTimeout(() => {
-        elComentList.style.backgroundColor = "orange";
-    }, 3000);
-
-    setTimeout(() => {
-        elComentList.style.backgroundColor = "lightblue";
-    }, 4500);
-
-    setTimeout(() => {
-        elComentList.style.backgroundColor = "pink";
-    }, 6000);
-
-  }, 1000);
-}
-
-commentsColors();

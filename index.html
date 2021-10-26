@@ -1,77 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./styles/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/styles/style.css">
     <title>Document</title>
-</head>
+  </head>
 
-<body>
-
-
-    <section class="container-fluid">
-
-        <div class="row">
-
-            <div class="line-wrapper col-4 p-0">
-              <h2 class="text-center">Users</h2>
-                <div class="m-0">
-                    <ul class="user-list lists-wrapper p-0"></ul>
-                </div>
-            </div>
-
-            <div class="line-wrapper col-4 p-0">
-              <h2 class="text-center">Posts</h2>
-                <div class="m-0">
-                    <ul class="list-post lists-wrapper"></ul>
-                </div>
-            </div>
-
-            <div class="line-wrapper col-4 p-0">
-              <h2 class="text-center">Comments</h2>
-                <div class="m-0">
-                    <ul class="list-coment lists-wrapper"></ul>
-                </div>
-            </div>
-
+  <body>
+    <div class="container-fluid">
+        <h1 class="visually-hidden">Json Placeholders</h1>
+      <div class="row">
+        <div class="col-4">
+            <h2 class="text-center big-headings">Users</h2>
+          <div class="m-1 border">
+            <ul class="list-users lists-wrapper">
+            </ul>
+          </div>
+        </div>
+        <div class="col-4">
+            <h2 class="text-center big-headings">Posts</h2>
+          <div class="m-1 border">
+            <ul class="list-posts lists-wrapper">
+            </ul>
+          </div>
         </div>
 
-    </section>
-
-
+        <div class="col-4">
+            <h2 class="text-center big-headings">Comments</h2>
+          <div class="m-1 border">
+            <ul class="list-comments lists-wrapper">
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <template id="js-user-template">
-        <li class="js-user-item border p-3">
-
-            <h4 class="js-name">user</h4>
-            <h4 class="js-user">name</h4>
-            <button class="name-btn">enter</button>
-
-        </li>
+      <li class="js-user-item">
+        <img class="icon-img" src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/40/000000/external-user-interface-kiranshastry-lineal-color-kiranshastry.png"/>
+        <h2 class="js-name"></h4>
+        <h3 class="js-user"></h3>
+        <p class="js-email"></p>
+        <p class="js-street"></p>
+        <p class="js-suite"></p>
+        <p class="js-city"></p>
+        <button class="name-btn">Enter</button>
+      </li>
     </template>
 
     <template id="js-post-template">
-        <li>
-            <p class="js-post-title"></p>
-            <p class="js-post-body"></p>
-            <button class="post-btn">enter</button>
-        </li>
+      <li>
+        <img class="icon-img" src="https://img.icons8.com/external-bearicons-blue-bearicons/40/000000/external-Letter-business-and-marketing-bearicons-blue-bearicons.png"/>
+        <p class="js-post-title"></p>
+        <p class="js-post-body"></p>
+        <button class="post-btn">Enter</button>
+      </li>
     </template>
 
     <template id="js-comment-template">
-        <li>
-            <h5 class="comment-name"></h5>
-            <p class="comment-email"></p>
-            <p class="comment-body"></p>
-        </li>
-
+      <li>
+        <h5 class="comment-name"></h5>
+        <p class="comment-email"></p>
+        <p class="comment-body"></p>
+      </li>
     </template>
 
-    <script src="/js/main.js">
-    </script>
-</body>
 
+    <script src="/js/utils.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
 </html>

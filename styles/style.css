@@ -1,3 +1,7 @@
+body{
+    background-color: rgba(0, 255, 13, 0.295);
+}
+
 .line-wrapper{
     width: 100%;
     max-width: 493px;
@@ -10,17 +14,25 @@
 .lists-wrapper{
     list-style: none;
     padding: 20px 30px;
+    background-color: rgba(0, 0, 255, 0.192);
 }
 
 button{
     width: 100%;
     max-width: 100px;
     border: 2px solid black;
-    transform: translateX(330px);
+    transform: translateX(300px);
 }
 
 li{
-    padding: 20px 0;
+    padding: 10px 0;
     border-bottom: 2px solid black;
 }
 
+.big-headings{
+    margin: 10px 0;
+}
+
+.icon-img{
+    margin: 10px 0;
+}
