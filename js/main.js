@@ -1,6 +1,6 @@
 let elUserList = document.querySelector(".user-list");
 let elPostList = document.querySelector(".list-post");
-let elComent = document.querySelector(".list-coment");
+let elComentList = document.querySelector(".list-coment");
 let userTemplate = document.querySelector("#js-user-template").content;
 
 
@@ -8,7 +8,7 @@ let userTemplate = document.querySelector("#js-user-template").content;
 let postTemplate = document.querySelector("#js-post-template").content;
 // let elPostBtn = document.querySelector(".post-btn");
 
-// 1======================================================================
+// Users======================================================================
 let commentTemplate = document.querySelector("#js-comment-template").content;
 
 
@@ -21,12 +21,12 @@ fetch('https://jsonplaceholder.typicode.com/users')
     .then(response => response.json())
     .then(data => appendUser(data))
 
-let renderUser = function (object) {
+let renderUser = function (objectUser) {
     let userNameTemplate = userTemplate.cloneNode(true);
 
-    userNameTemplate.querySelector(".js-name").textContent = object.name;
-    userNameTemplate.querySelector(".js-user").textContent = object.username;
-    userNameTemplate.querySelector(".name-btn").setAttribute("data-id", `${object.id}`)
+    userNameTemplate.querySelector(".js-name").textContent = objectUser.name;
+    userNameTemplate.querySelector(".js-user").textContent = objectUser.username;
+    userNameTemplate.querySelector(".name-btn").setAttribute("data-id", `${objectUser.id}`)
 
     elFragment.appendChild(userNameTemplate);
 
@@ -35,9 +35,9 @@ let renderUser = function (object) {
 elUserList.innerHTML = "";
 
 let appendUser = function (array) {
-    array.forEach(function (object) {
+    array.forEach(function (objectUser) {
 
-        renderUser(object);
+        renderUser(objectUser);
     });
 
     elUserList.appendChild(elFragment);
@@ -45,7 +45,7 @@ let appendUser = function (array) {
 };
 
 
-// 2======================================================================
+// Posts======================================================================
 
 
 const test = function (id) {
@@ -84,7 +84,7 @@ elUserList.addEventListener("click", function (e) {
 
 
 
-// 3===============================================================================
+// Comments===============================================================================
 
 const commentsTest = function (idi) {
 
@@ -105,7 +105,7 @@ const commentsTest = function (idi) {
         some.forEach(function (objectComment) {
             renderComment(objectComment);
         });
-        elComent.appendChild(elCommentFragment);
+        elComentList.appendChild(elCommentFragment);
     }
 
 
@@ -116,18 +116,18 @@ const commentsTest = function (idi) {
 
 
 elPostList.addEventListener("click", function (ev) {
-    elComent.innerHTML = "";
+    elComentList.innerHTML = "";
     let postId = ev.target.dataset.id
     commentsTest(postId);
 });
 console.log();
 
 
-
+// =============================================================================================================================
 
 // Change colors 
 
-function userColors() {
+function usersColors() {
   disco = setInterval(() => {
     elUserList.style.backgroundColor = "lightgreen";
 
@@ -150,7 +150,7 @@ function userColors() {
   }, 1000);
 }
 
-userColors();
+usersColors();
 
 
 function postsColors() {
@@ -181,22 +181,22 @@ postsColors();
 
 function commentsColors() {
   disco = setInterval(() => {
-    elComent.style.backgroundColor = "lightgreen";
+    elComentList.style.backgroundColor = "lightgreen";
 
     setTimeout(() => {
-        elComent.style.backgroundColor = "yellow";
+        elComentList.style.backgroundColor = "yellow";
     }, 1500);
 
     setTimeout(() => {
-        elComent.style.backgroundColor = "orange";
+        elComentList.style.backgroundColor = "orange";
     }, 3000);
 
     setTimeout(() => {
-        elComent.style.backgroundColor = "lightblue";
+        elComentList.style.backgroundColor = "lightblue";
     }, 4500);
 
     setTimeout(() => {
-        elComent.style.backgroundColor = "pink";
+        elComentList.style.backgroundColor = "pink";
     }, 6000);
 
   }, 1000);
